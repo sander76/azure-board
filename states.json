@@ -1,0 +1,10 @@
+{
+    "states": [
+        "Triaged",
+        "In Progress"
+    ],
+    "type": [
+        "Bug",
+        "User Story"
+    ]
+}
