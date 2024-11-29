@@ -1,0 +1,96 @@
+interactions:
+- request:
+    body: '[{"op": "add", "path": "/fields/System.Title", "value": "mytitle1"}, {"op":
+      "add", "path": "/fields/System.Description", "value": "some description"}]'
+    headers:
+      accept:
+      - '*/*'
+      accept-encoding:
+      - gzip, deflate
+      authorization:
+      - Basic OjVSWVhyRHFsamxQNllCMTdYYWJXSlVPVFQ2V1Vac2dsaVFPVFZTZkxXNk1aRjJQTFZRYzNKUVFKOTlBS0FDQUFBQUFiaGZPWEFBQVNBWkRPck40TQ==
+      connection:
+      - keep-alive
+      content-length:
+      - '150'
+      content-type:
+      - application/json-patch+json
+      host:
+      - dev.azure.com
+      user-agent:
+      - python-httpx/0.27.2
+    method: POST
+    uri: https://dev.azure.com/baringa/plcs/_apis/wit/workitems/$Bug?api-version=7.1
+  response:
+    body:
+      string: !!binary |
+        H4sIAAAAAAAEAO29B2AcSZYlJi9tynt/SvVK1+B0oQiAYBMk2JBAEOzBiM3mkuwdaUcjKasqgcpl
+        VmVdZhZAzO2dvPfee++999577733ujudTif33/8/XGZkAWz2zkrayZ4hgKrIHz9+fB8/In7xR8Xs
+        o0f3Huzu7Y8+qvPLjx7tjj46L/Jy1nz06Bd/9Pq6afPF+LjOs5dZO//o0Uerctp8NDJfvMmzxcu6
+        +ul82va+O2vzOmuLahl987tV/ZZaLN5cr3L68sn6wn33us1afPgiv3Ifvsqzplp2Pz0hzNp89pT+
+        oa/2dvb2t3d3t/cO3uzuP9rdfbR3b/zp/oOf6rV/co3RzYpmVWbXL7IFXn6dLWd5nb7J18uiafIl
+        vbSuS/pi3rar5tHdu82qWdXVbP222R1fNvTX+LJo1lnZtOtZUY2n1eLu8f79e/m9Bwf59kOi6fb+
+        /v3pdrb3cLK9fy/bP5jsZvvTTx/e/f2zVdHcPZvly7Zoi7y5+3Dv/r2de/ey7Yf55NPtT6cH2fbB
+        wf7D7Yf3s9293f3zvb2dc0Ln9y+L5Vuel+wya7Mav83r/NzDcZZfjrMfrOuc0ZlkdbG8yLTDz+ts
+        NafZOi/K/O4X+WKS18cMp7mbZbPxl2/Odr/4wfEPvtg7bb/87k8WL4qde7/PD+bz528u9l88fdt+
+        +eYn51+8OXv34vPf5/qLn36y+OiX/JLRR+Cej26JPtH1F63zgNrEQPQpqP17Kq7Am9oWi+wi/yog
+        /w9zaKOPZnkzrYtVWxGVP/paMIg6hunm2fLifZhU2v+ISb+BmfwRk26EQdQxTFctFjTXJ9V6Sbp8
+        x37+pmhL0GJxTXxQ5rvU7RfFtK6a6rwd/+TrN6/5zWopWltY92ZOj4N4WRdVXbTE93tDTV7nl7k0
+        +eheup1+kc+KNUgRb/2TWbnOYb2o+ZN1UyzzxrNBT5V8ZKPo+6Za5KmhKD4i2jhmbvKSWPiWrPxg
+        tnP/wd5evp1PZw+39z/dPd+e5Of3tx98ev/Bw2z28MFefl+Z4qpo716pLWzukjzu7aNj89FXqxnR
+        kjH4IfR8d63deRi8ykmBEDl+aDiQF6IdelhgPok7f2hIECjpj3CYtwsS8W+0X3RXcHfEv630ia7w
+        OdAQr+gb7bI3VPTR3IXjRR07l+9no0uFDl0cWqtvBLoZkM7dR7/k/wHTQmah1QoAAA==
+    headers:
+      Access-Control-Expose-Headers:
+      - Request-Context
+      ActivityId:
+      - 68e70e59-f7ca-4ed7-83e1-f0ef62e9cab6
+      Cache-Control:
+      - no-cache, no-store, must-revalidate
+      Content-Encoding:
+      - gzip
+      Content-Length:
+      - '904'
+      Content-Type:
+      - application/json; charset=utf-8; api-version=7.1
+      Date:
+      - Thu, 28 Nov 2024 14:11:22 GMT
+      Expires:
+      - '-1'
+      P3P:
+      - CP="CAO DSP COR ADMa DEV CONo TELo CUR PSA PSD TAI IVDo OUR SAMi BUS DEM NAV
+        STA UNI COM INT PHY ONL FIN PUR LOC CNT"
+      Pragma:
+      - no-cache
+      Request-Context:
+      - appId=cid-v1:6c6b0002-6938-437d-b623-7a93d8b21070
+      Set-Cookie:
+      - VstsSession=%7B%22PersistentSessionId%22%3A%224ebe299d-4cba-4796-a87d-db9bd11620e2%22%2C%22PendingAuthenticationSessionId%22%3A%2200000000-0000-0000-0000-000000000000%22%2C%22CurrentAuthenticationSessionId%22%3A%2200000000-0000-0000-0000-000000000000%22%2C%22SignInState%22%3A%7B%7D%7D;SameSite=None;
+        domain=.dev.azure.com; expires=Fri, 28-Nov-2025 14:11:23 GMT; path=/; secure;
+        HttpOnly
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - CONFIG_NOCACHE
+      X-Content-Type-Options:
+      - nosniff
+      X-FRAME-OPTIONS:
+      - SAMEORIGIN
+      X-MSEdge-Ref:
+      - 'Ref A: 4A14F096610145898664B6C06324A0DB Ref B: AMS04EDGE2309 Ref C: 2024-11-28T14:11:23Z'
+      X-TFS-ProcessId:
+      - 85e939f9-f402-4717-9f67-07c1815dd2c1
+      X-TFS-Session:
+      - 68e70e59-f7ca-4ed7-83e1-f0ef62e9cab6
+      X-VSS-E2EID:
+      - 68e70e59-f7ca-4ed7-83e1-f0ef62e9cab6
+      X-VSS-SenderDeploymentId:
+      - 5206dd6d-9024-e796-273d-d039bb0efc34
+      X-VSS-UserData:
+      - 9253033a-9eb6-6c8a-8849-95a1214f220f:Sander.Teunissen@baringa.com
+    status:
+      code: 200
+      message: OK
+version: 1
