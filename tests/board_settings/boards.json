@@ -1,0 +1,12 @@
+{
+    "organization": "my org",
+    "project": "my project",
+    "states": [
+        "state 1",
+        "state 2"
+    ],
+    "item_types": [
+        "type 1",
+        "type 2"
+    ]
+}

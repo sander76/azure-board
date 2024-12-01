@@ -1,21 +1,14 @@
 import pytest
-from baringa_board.cli import Add
-from baringa_board.client import BoardClient
+from azure_board.cli import Add, Main
+from azure_board.client import BoardClient
 
 
 @pytest.mark.vcr
 def test_create_item():
-    add = Add(
-        organization="baringa", project="plcs", title="mytitle1", type="Bug", description="some description"
-    )
+    add = Add(title="add poetry cache to pipeline", type="User Story")
+    main = Main(organization="baringa", project="plcs", sub_command=add)
     client = BoardClient()
 
-    result = client.create_item(add)
+    result = client.create_item(main, add)
 
     print(result)
-
-
-def test_to_cli_model():
-    new_model = Add.to_cli()
-
-    assert new_model
