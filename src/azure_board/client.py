@@ -61,8 +61,8 @@ class BoardClient:
 
         return result.json()
 
-    def create_item(self, main: Main, add: Add) -> dict:
-        path = f"/{main.organization}/{main.project}/_apis/wit/workitems/${add.type}"
+    def create_item(self, add: Add) -> dict:
+        path = f"/{add.organization}/{add.project}/_apis/wit/workitems/${add.type}"
 
         body = [
             op_add("/fields/System.Title", value=add.title),

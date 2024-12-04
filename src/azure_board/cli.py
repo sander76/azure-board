@@ -6,15 +6,16 @@ from pydantic import BaseModel
 
 from azure_board.client import BoardClient
 from azure_board.config import DEFAULT_AREA_PATH, DEFAULT_ORGANIZATION, DEFAULT_PROJECT, ITEM_TYPES
+from azure_board.interactive import MyApp
 
 T = TypeVar("T", bound=BaseModel)
 
 
-class Interactive(BaseModel):
+class AzureBoard(BaseModel):
     """Basemodel"""
 
 
-class Add(Interactive):
+class Add(AzureBoard):
     """Add a new work-item."""
 
     title: str
@@ -31,35 +32,37 @@ class Add(Interactive):
     assigned_to: Annotated[str | None, short("a")] = None
     """Full name of the person."""
 
-    """Description."""
-
-    def __call__(self, parent):
-        client = BoardClient()
-        client.create_item(parent, self)
-
-
-class Interactive(BaseModel):
-    """Go the interactive way."""
-
-    action: Literal["create"]
-
-    def __call__(self, parent):
-        match self.action:
-            case "create":
-                pass
-
-
-class Main(BaseModel):
     organization: Annotated[str, short("o")] = DEFAULT_ORGANIZATION
     """https://dev.azure.com/{your org}."""
 
     project: Annotated[str, short("p")] = DEFAULT_PROJECT
     """The project where your boards are in."""
 
-    sub_command: Add | Interactive
+    def __call__(
+        self,
+    ):
+        client = BoardClient()
+        client.create_item(self)
+
+
+class AzureBoard(BaseModel):
+    """Go the interactive way."""
+
+    action: Literal["create"]
 
     def __call__(self):
-        self.sub_command(self)
+        match self.action:
+            case "create":
+                print("do stuff")
+                app = MyApp(Add)
+                app.run(inline=True)
+
+
+class Main(BaseModel):
+    sub_command: Add | AzureBoard
+
+    def __call__(self):
+        self.sub_command()
 
 
 if __name__ == "__main__":

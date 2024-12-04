@@ -21,9 +21,13 @@ dependencies = [
   "keyring>=25.5",
   "pydantic>=2.10.2",
   "pydantic-settings>=2.6.1",
-  "questionary>=2.0.1",
   "rich>=13.9.4",
+  "textual>=0.88.1",
+  "ticklist",
 ]
+
+[project.scripts]
+ab = "azure_board.ab:run"
 
 [tool.ruff]
 line-length = 110
@@ -40,3 +44,6 @@ dev-dependencies = [
   "ruff>=0.8.1",
   "mypy>=1.13.0",
 ]
+
+[tool.uv.sources]
+ticklist = { path = "../ticklist", editable = true }
