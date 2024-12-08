@@ -5,7 +5,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "azure-board"
-version = "0.1.0"
+version = "0.2.5"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -27,13 +27,13 @@ dependencies = [
 ]
 
 [project.scripts]
-ab = "azure_board.ab:run"
+ab = "azure_board.cli:run"
 
 [tool.ruff]
 line-length = 110
 
 [tool.pytest_env]
-AZURE_BOARD_FOLDER = { value = "{PWD}/tests/board_settings", transform = true }
+AZURE_BOARD_FOLDER = { value = "../tests/board_settings" }  # relative to the root of the repo.
 
 [tool.uv]
 dev-dependencies = [

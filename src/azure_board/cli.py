@@ -1,11 +1,12 @@
-import logging
 from typing import Annotated, Literal, TypeVar
 
 from clipstick import parse, short
 from pydantic import BaseModel
 
 from azure_board.client import BoardClient
-from azure_board.config import DEFAULT_AREA_PATH, DEFAULT_ORGANIZATION, DEFAULT_PROJECT, ITEM_TYPES
+from azure_board.config import (
+    board_settings,
+)
 from azure_board.interactive import MyApp
 
 T = TypeVar("T", bound=BaseModel)
@@ -13,6 +14,9 @@ T = TypeVar("T", bound=BaseModel)
 
 class AzureBoard(BaseModel):
     """Basemodel"""
+
+    def __call__(self):
+        raise NotImplementedError
 
 
 class Add(AzureBoard):
@@ -24,18 +28,18 @@ class Add(AzureBoard):
     description: str
     """Description of the work item."""
 
-    type: ITEM_TYPES
+    type: board_settings.item_types_annotation()  # type: ignore[valid-type]
     """Type of the work-item. (like 'Bug' or 'Task')"""
 
-    area_path: Annotated[str, short("ap")] = DEFAULT_AREA_PATH
+    area_path: Annotated[str, short("ap")] = board_settings.default_area_path
 
     assigned_to: Annotated[str | None, short("a")] = None
     """Full name of the person."""
 
-    organization: Annotated[str, short("o")] = DEFAULT_ORGANIZATION
+    organization: Annotated[str, short("o")] = board_settings.default_organization
     """https://dev.azure.com/{your org}."""
 
-    project: Annotated[str, short("p")] = DEFAULT_PROJECT
+    project: Annotated[str, short("p")] = board_settings.default_project
     """The project where your boards are in."""
 
     def __call__(
@@ -45,10 +49,11 @@ class Add(AzureBoard):
         client.create_item(self)
 
 
-class AzureBoard(BaseModel):
+class In(BaseModel):
     """Go the interactive way."""
 
     action: Literal["create"]
+    """Create a work item."""
 
     def __call__(self):
         match self.action:
@@ -59,12 +64,18 @@ class AzureBoard(BaseModel):
 
 
 class Main(BaseModel):
-    sub_command: Add | AzureBoard
+    """Azure board cli tooling."""
+
+    sub_command: Add | In
 
     def __call__(self):
         self.sub_command()
 
 
+def run():
+    (parse(Main)())
+
+
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.DEBUG)
+    # logging.basicConfig(level=logging.DEBUG)
     print(parse(Main)())

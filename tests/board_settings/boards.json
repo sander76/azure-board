@@ -1,12 +1,12 @@
 {
-    "organization": "my org",
+    "organization": "my organization",
     "project": "my project",
     "states": [
-        "state 1",
-        "state 2"
+        "Started",
+        "Finished"
     ],
     "item_types": [
-        "type 1",
-        "type 2"
+        "Bug",
+        "Task"
     ]
 }

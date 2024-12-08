@@ -1,2 +1,2 @@
-Static {border:none;}
-Input {border:none;height:1;padding:0;}
+.ticklistForm Static {border:none;}
+.ticklistForm Input {border:none;height:1;padding:0;}

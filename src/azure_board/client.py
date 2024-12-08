@@ -18,7 +18,7 @@ import keyring
 _logger = logging.getLogger(__name__)
 
 if TYPE_CHECKING:
-    from azure_board.cli import Add, Main
+    from azure_board.cli import Add
 
 
 def _get_token() -> str:
