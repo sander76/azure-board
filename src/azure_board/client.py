@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import json
 import logging
+import os
+from abc import ABC, abstractmethod
 from base64 import b64encode
 from dataclasses import dataclass
 from functools import cached_property
@@ -15,7 +17,8 @@ from typing import TYPE_CHECKING, Any
 
 import httpx
 import keyring
-from pydantic import BaseModel
+
+from azure_board.config import AZURE_BOARD_DRYRUN
 
 _logger = logging.getLogger(__name__)
 
@@ -41,7 +44,25 @@ class ItemResult:
     item_url: str
 
 
-class BoardClient:
+def board_client() -> BaseClient:
+    dry_run = bool(int(os.environ.get(AZURE_BOARD_DRYRUN, 0)))
+    if dry_run:
+        return StubClient()
+    return BoardClient()
+
+
+class BaseClient(ABC):
+    @abstractmethod
+    def create_item(self, add: Add) -> ItemResult:
+        """Create a work item."""
+
+
+class StubClient(BaseClient):
+    def create_item(self, add: Add) -> ItemResult:
+        return ItemResult(12345, "http://dummy_url")
+
+
+class BoardClient(BaseClient):
     def __init__(self):
         self._token = _get_token()
         self._query = {"api-version": "7.1"}

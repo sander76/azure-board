@@ -11,6 +11,8 @@ _logger = logging.getLogger(__name__)
 _logger.debug(f"azure board folder{os.environ.get('AZURE_BOARD_FOLDER')}")
 _SETTINGS_FOLDER = Path(os.environ.get("AZURE_BOARD_FOLDER", Path.home() / ".config" / "azure_board"))
 
+AZURE_BOARD_DRYRUN = "AZURE_BOARD_DRYRUN"
+
 
 class AzureBoard(BaseModel):
     """Basemodel"""

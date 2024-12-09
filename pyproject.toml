@@ -23,7 +23,7 @@ dependencies = [
   "pydantic-settings>=2.6.1",
   "rich>=13.9.4",
   "textual>=0.88.1",
-  "ticklist>=0.3",
+  "ticklist==0.4.1",
 ]
 
 [project.scripts]
@@ -44,6 +44,3 @@ dev-dependencies = [
   "ruff>=0.8.1",
   "mypy>=1.13.0",
 ]
-
-[tool.uv.sources]
-ticklist = { path = "../ticklist", editable = true }

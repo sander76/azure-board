@@ -3,7 +3,7 @@ from typing import Annotated, Literal, TypeVar
 from clipstick import parse, short
 from pydantic import BaseModel
 
-from azure_board.client import BoardClient, ItemResult
+from azure_board.client import BoardClient, ItemResult, board_client
 from azure_board.config import (
     board_settings,
 )
@@ -48,7 +48,7 @@ class Add(AzureBoard):
     def __call__(
         self,
     ) -> ItemResult:
-        client = BoardClient()
+        client = board_client()
         return client.create_item(self)
 
 

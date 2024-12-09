@@ -29,7 +29,7 @@ wheels = [
 
 [[package]]
 name = "azure-board"
-version = "0.1.0"
+version = "0.2.5"
 source = { editable = "." }
 dependencies = [
     { name = "clipstick" },
@@ -61,7 +61,7 @@ requires-dist = [
     { name = "pydantic-settings", specifier = ">=2.6.1" },
     { name = "rich", specifier = ">=13.9.4" },
     { name = "textual", specifier = ">=0.88.1" },
-    { name = "ticklist", editable = "../ticklist" },
+    { name = "ticklist", specifier = "==0.4.1" },
 ]
 
 [package.metadata.requires-dev]
@@ -833,28 +833,15 @@ wheels = [
 
 [[package]]
 name = "ticklist"
-version = "0.2.0"
-source = { editable = "../ticklist" }
+version = "0.4.1"
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "pydantic" },
     { name = "textual" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "pydantic", specifier = ">=2.10.2" },
-    { name = "textual", specifier = ">=0.88" },
-]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "coverage", extras = ["toml"], specifier = ">=7.6.8" },
-    { name = "mypy", specifier = ">=1.13" },
-    { name = "nox", specifier = ">=2024.10.9" },
-    { name = "pyproject-fmt", specifier = ">=2.5" },
-    { name = "pytest", specifier = ">=8.3.3" },
-    { name = "pytest-asyncio", specifier = ">=0.24" },
-    { name = "ruff", specifier = ">=0.8.1" },
+sdist = { url = "https://files.pythonhosted.org/packages/13/83/b262089759c0646eab923084e839b347fa9701baf1d98c98956e871cb19c/ticklist-0.4.1.tar.gz", hash = "sha256:7f7808b4e26e9f7a854a580e308fcb6f801e30630e1a5d756ebc9714e9a1d6e4", size = 42368 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/d6/20/55f7a8fdbb54c47810a3338de36e1ce3097b07d0c88a129b62cde5949fba/ticklist-0.4.1-py3-none-any.whl", hash = "sha256:65dea7e132222a9221d4a257aacdb382a8ac40ce5225d058efa4fd0802ad907b", size = 13812 },
 ]
 
 [[package]]
