@@ -3,11 +3,12 @@ from typing import Annotated, Literal, TypeVar
 from clipstick import parse, short
 from pydantic import BaseModel
 
-from azure_board.client import BoardClient
+from azure_board.client import BoardClient, ItemResult
 from azure_board.config import (
     board_settings,
 )
-from azure_board.interactive import MyApp
+from azure_board.interactive import WorkItem
+from azure_board.setup_logging import setup_logging
 
 T = TypeVar("T", bound=BaseModel)
 
@@ -31,7 +32,9 @@ class Add(AzureBoard):
     type: board_settings.item_types_annotation()  # type: ignore[valid-type]
     """Type of the work-item. (like 'Bug' or 'Task')"""
 
-    area_path: Annotated[str, short("ap")] = board_settings.default_area_path
+    area_path: Annotated[board_settings.available_area_paths_annotation, short("ap")] = (
+        board_settings.default_area_path
+    )
 
     assigned_to: Annotated[str | None, short("a")] = None
     """Full name of the person."""
@@ -44,9 +47,9 @@ class Add(AzureBoard):
 
     def __call__(
         self,
-    ):
+    ) -> ItemResult:
         client = BoardClient()
-        client.create_item(self)
+        return client.create_item(self)
 
 
 class In(BaseModel):
@@ -59,7 +62,7 @@ class In(BaseModel):
         match self.action:
             case "create":
                 print("do stuff")
-                app = MyApp(Add)
+                app = WorkItem(Add)
                 app.run(inline=True)
 
 
@@ -73,9 +76,10 @@ class Main(BaseModel):
 
 
 def run():
+    setup_logging()
     (parse(Main)())
 
 
 if __name__ == "__main__":
-    # logging.basicConfig(level=logging.DEBUG)
+    setup_logging()
     print(parse(Main)())

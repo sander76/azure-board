@@ -37,12 +37,19 @@ class BoardSettings(BaseSettings):
     area_path: str | None = None
     """Default area path"""
 
+    available_area_paths: list[str] | None = None
+    """Available area paths."""
+
     def item_types_annotation(self):
         return Literal[*self.item_types] if self.item_types else str  # type: ignore[union-attr]
 
     @property
     def default_area_path(self):
         return self.area_path or PydanticUndefined  # type: ignore[union-attr]
+
+    @property
+    def available_area_paths_annotation(self):
+        return Literal[*self.available_area_paths] if self.available_area_paths else str
 
     @property
     def default_organization(self):
@@ -64,7 +71,3 @@ def load_board_settings() -> BoardSettings:
 
 board_settings = load_board_settings()
 _logger.info(board_settings)
-# ITEM_TYPES = Literal[*load_board_settings().item_types] if load_board_settings() else str  # type: ignore[union-attr]
-# DEFAULT_ORGANIZATION = load_board_settings().organization if load_board_settings() else PydanticUndefined  # type: ignore[union-attr]
-# DEFAULT_PROJECT = load_board_settings().project if load_board_settings() else PydanticUndefined  # type: ignore[union-attr]
-# DEFAULT_AREA_PATH = load_board_settings().area_path if load_board_settings() else PydanticUndefined  # type: ignore[union-attr]

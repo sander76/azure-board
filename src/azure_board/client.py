@@ -9,11 +9,13 @@ from __future__ import annotations
 import json
 import logging
 from base64 import b64encode
+from dataclasses import dataclass
 from functools import cached_property
 from typing import TYPE_CHECKING, Any
 
 import httpx
 import keyring
+from pydantic import BaseModel
 
 _logger = logging.getLogger(__name__)
 
@@ -31,6 +33,12 @@ def _get_token() -> str:
 
 def op_add(path: str, value: Any):
     return {"op": "add", "path": path, "value": value}
+
+
+@dataclass
+class ItemResult:
+    id: int
+    item_url: str
 
 
 class BoardClient:
@@ -56,12 +64,13 @@ class BoardClient:
         try:
             result.raise_for_status()
         except httpx.HTTPStatusError:
-            print(result.text)
+            _logger.error(result)
             raise
 
         return result.json()
 
-    def create_item(self, add: Add) -> dict:
+    def create_item(self, add: Add) -> ItemResult:
+        _logger.info(f"create work item {add=!r}")
         path = f"/{add.organization}/{add.project}/_apis/wit/workitems/${add.type}"
 
         body = [
@@ -74,7 +83,10 @@ class BoardClient:
         if add.description:
             body.append(op_add("/fields/System.Description", value=add.description))
 
-        _logger.debug(body)
+        _logger.debug(f"{body=!r}")
         result = self._post(path, body)
+        _logger.debug(f"{result=!r}")
 
-        return result
+        edit_url = result["_links"]["html"]
+        id = result["id"]
+        return ItemResult(id=id, item_url=edit_url)
