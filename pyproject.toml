@@ -5,7 +5,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "azure-board"
-version = "0.2.5"
+version = "0.3.1"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"

@@ -108,6 +108,6 @@ class BoardClient(BaseClient):
         result = self._post(path, body)
         _logger.debug(f"{result=!r}")
 
-        edit_url = result["_links"]["html"]
+        edit_url = result["_links"]["html"]["href"]
         id = result["id"]
         return ItemResult(id=id, item_url=edit_url)
