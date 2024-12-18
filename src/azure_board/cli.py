@@ -3,7 +3,7 @@ from typing import Annotated, Literal, TypeVar
 from clipstick import parse, short
 from pydantic import BaseModel
 
-from azure_board.client import BoardClient, ItemResult, board_client
+from azure_board.client import ItemResult, board_client
 from azure_board.config import (
     board_settings,
 )
@@ -20,6 +20,9 @@ class AzureBoard(BaseModel):
         raise NotImplementedError
 
 
+annotated_area_path = Annotated[board_settings.available_area_paths_annotation, short("ap")]
+
+
 class Add(AzureBoard):
     """Add a new work-item."""
 
@@ -32,9 +35,7 @@ class Add(AzureBoard):
     type: board_settings.item_types_annotation()  # type: ignore[valid-type]
     """Type of the work-item. (like 'Bug' or 'Task')"""
 
-    area_path: Annotated[board_settings.available_area_paths_annotation, short("ap")] = (
-        board_settings.default_area_path
-    )
+    area_path: annotated_area_path = board_settings.default_area_path
 
     assigned_to: Annotated[str | None, short("a")] = None
     """Full name of the person."""

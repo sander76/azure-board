@@ -22,7 +22,7 @@ def test_valid_type(base_add_model):
 
     This is done at runtime right when everything is initialized.
     A config file is loaded from this test folder by means of an environment variable set
-    in the pyproject.toml. (pytest-env)
+    in the __init__ of the main test module.
     """
     val = Add.model_validate(base_add_model | {"type": "Bug"})
 
@@ -34,7 +34,7 @@ def test_invalid_type(base_add_model):
 
     This is done at runtime right when everything is initialized.
     A config file is loaded from this test folder by means of an environment variable set
-    in the pyproject.toml. (pytest-env)
+    in the __init__ of the main test module.
     """
     with pytest.raises(ValidationError, match="input_value='illegal type'"):
         Add.model_validate(base_add_model | {"type": "illegal type"})
