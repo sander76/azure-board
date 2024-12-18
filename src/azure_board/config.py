@@ -71,5 +71,5 @@ def load_board_settings() -> BoardSettings:
         return BoardSettings()
 
 
-board_settings = load_board_settings()
+board_settings: BoardSettings = load_board_settings()
 _logger.info(board_settings)

@@ -31,9 +31,6 @@ scripts.ab = "azure_board.cli:run"
 [tool.ruff]
 line-length = 110
 
-# [tool.pytest_env]
-# AZURE_BOARD_FOLDER = { value = "test_board_settings" } # relative to the root of the test_folder.
-
 [tool.uv]
 dev-dependencies = [
   "pytest-recording>=0.13.2",

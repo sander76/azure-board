@@ -20,7 +20,7 @@ class AzureBoard(BaseModel):
         raise NotImplementedError
 
 
-annotated_area_path = Annotated[board_settings.available_area_paths_annotation, short("ap")]
+annotated_area_path = Annotated[board_settings.available_area_paths_annotation, short("ap")]  # type: ignore[name-defined]
 
 
 class Add(AzureBoard):
