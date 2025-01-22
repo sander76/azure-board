@@ -37,7 +37,7 @@ class Add(AzureBoard):
 
     area_path: annotated_area_path = board_settings.default_area_path
 
-    assigned_to: Annotated[str | None, short("a")] = None
+    assigned_to: str | None = board_settings.assigned_to
     """Full name of the person."""
 
     organization: Annotated[str, short("o")] = board_settings.default_organization

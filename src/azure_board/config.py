@@ -1,5 +1,6 @@
 import logging
 import os
+from enum import Enum
 from pathlib import Path
 from typing import Literal
 
@@ -41,6 +42,8 @@ class BoardSettings(BaseSettings):
 
     available_area_paths: list[str] | None = None
     """Available area paths."""
+
+    assigned_to: str
 
     def item_types_annotation(self):
         return Literal[*self.item_types] if self.item_types else str  # type: ignore[union-attr]

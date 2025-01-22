@@ -8,5 +8,6 @@
     "item_types": [
         "Bug",
         "Task"
-    ]
+    ],
+    "assigned_to": "me"
 }
