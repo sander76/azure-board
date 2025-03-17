@@ -34,6 +34,7 @@ class WorkItem(App):
         yield Label("", id="result")
 
     def on_mount(self) -> None:
+        # self.theme = "tokyo-night"
         _form = Form(self._model, NO_VALUE, ANNOTATION_ITERATORS)
 
         self.push_screen(_form, self._check_result)
