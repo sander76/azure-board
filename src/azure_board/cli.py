@@ -1,11 +1,13 @@
 from typing import Annotated, Literal, TypeVar
 
-from clipstick import parse, short
-from pydantic import BaseModel
+from networkx import bellman_ford_predecessor_and_distance
+from pydantic import BaseModel, create_model
 
 from azure_board.client import ItemResult, board_client
 from azure_board.config import (
+    BoardSettings,
     board_settings,
+    load_board_settings,
 )
 from azure_board.interactive import WorkItem
 from azure_board.setup_logging import setup_logging
@@ -20,9 +22,6 @@ class AzureBoard(BaseModel):
         raise NotImplementedError
 
 
-annotated_area_path = Annotated[board_settings.available_area_paths_annotation, short("ap")]  # type: ignore[name-defined]
-
-
 class Add(AzureBoard):
     """Add a new work-item."""
 
@@ -32,18 +31,18 @@ class Add(AzureBoard):
     description: str
     """Description of the work item."""
 
-    type: board_settings.item_types_annotation()  # type: ignore[valid-type]
+    type: Literal["Bug", "Task"]
     """Type of the work-item. (like 'Bug' or 'Task')"""
 
-    area_path: annotated_area_path = board_settings.default_area_path
+    area_path: str
 
-    assigned_to: str | None = board_settings.assigned_to
+    assigned_to: str | None
     """Full name of the person."""
 
-    organization: Annotated[str, short("o")] = board_settings.default_organization
+    organization: str
     """https://dev.azure.com/{your org}."""
 
-    project: Annotated[str, short("p")] = board_settings.default_project
+    project: str
     """The project where your boards are in."""
 
     def __call__(
@@ -53,34 +52,21 @@ class Add(AzureBoard):
         return client.create_item(self)
 
 
-class In(BaseModel):
-    """Go the interactive way."""
+def with_config(settings: BoardSettings):
+    board_settings = load_board_settings()
+    Add.model_fields["organization"].default = board_settings.organization
+    Add.model_fields["project"].default = board_settings.project
+    Add.model_fields["type"].annotation = board_settings.item_types
 
-    action: Literal["create"]
-    """Create a work item."""
-
-    def __call__(self):
-        match self.action:
-            case "create":
-                print("do stuff")
-                app = WorkItem(Add)
-                app.run(inline=True)
-
-
-class Main(BaseModel):
-    """Azure board cli tooling."""
-
-    sub_command: Add | In
-
-    def __call__(self):
-        self.sub_command()
+    return Add
 
 
 def run():
     setup_logging()
-    (parse(Main)())
+    app = WorkItem(with_config(Add))
+    app.run()
 
 
 if __name__ == "__main__":
     setup_logging()
-    print(parse(Main)())
+    run()

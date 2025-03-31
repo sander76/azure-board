@@ -44,9 +44,7 @@ class BoardSettings(BaseSettings):
     """Available area paths."""
 
     assigned_to: str
-
-    def item_types_annotation(self):
-        return Literal[*self.item_types] if self.item_types else str  # type: ignore[union-attr]
+    """default person to assign the task to."""
 
     @property
     def default_area_path(self):

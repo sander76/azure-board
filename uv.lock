@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.11"
 resolution-markers = [
     "platform_python_implementation == 'PyPy'",
@@ -29,10 +30,9 @@ wheels = [
 
 [[package]]
 name = "azure-board"
-version = "0.3.5"
+version = "0.3.6"
 source = { editable = "." }
 dependencies = [
-    { name = "clipstick" },
     { name = "httpx" },
     { name = "keyring" },
     { name = "pydantic" },
@@ -54,7 +54,6 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "clipstick", specifier = ">=0.6.1" },
     { name = "httpx", specifier = ">=0.27.2" },
     { name = "keyring", specifier = ">=25.5" },
     { name = "pydantic", specifier = ">=2.10.2" },
@@ -123,19 +122,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/26/9f/1aab65a6c0db35f43c4d1b4f580e8df53914310afc10ae0397d29d697af4/cffi-1.17.1-cp313-cp313-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:dd398dbc6773384a17fe0d3e7eeb8d1a21c2200473ee6806bb5e6a8e62bb73dd", size = 479447 },
     { url = "https://files.pythonhosted.org/packages/5f/e4/fb8b3dd8dc0e98edf1135ff067ae070bb32ef9d509d6cb0f538cd6f7483f/cffi-1.17.1-cp313-cp313-musllinux_1_1_aarch64.whl", hash = "sha256:3edc8d958eb099c634dace3c7e16560ae474aa3803a5df240542b305d14e14ed", size = 484358 },
     { url = "https://files.pythonhosted.org/packages/f1/47/d7145bf2dc04684935d57d67dff9d6d795b2ba2796806bb109864be3a151/cffi-1.17.1-cp313-cp313-musllinux_1_1_x86_64.whl", hash = "sha256:72e72408cad3d5419375fc87d289076ee319835bdfa2caad331e377589aebba9", size = 488469 },
-]
-
-[[package]]
-name = "clipstick"
-version = "0.6.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "pydantic" },
-    { name = "rich" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/01/4a/75821a6eafb7759ee8fb18767e2d585acaf5eb6d650750cf863a5291a2c0/clipstick-0.6.1.tar.gz", hash = "sha256:f7cd156b3d82554463d410b49cc063fa7cd19e2389a5a518954c443b8a9807c5", size = 14254 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/68/ef/83cf571a61bd505abb19b18a5f8e621a2e0633ff6f0a25b20ebd75b2de6a/clipstick-0.6.1-py3-none-any.whl", hash = "sha256:ae014e1e607019cc6e50869a08064b3da16a56021579c94d710aec9b3a5cd4d8", size = 15205 },
 ]
 
 [[package]]
