@@ -1,12 +1,10 @@
-from typing import Annotated, Literal, TypeVar
+from typing import Literal, TypeVar
 
-from networkx import bellman_ford_predecessor_and_distance
-from pydantic import BaseModel, create_model
+from pydantic import BaseModel
 
 from azure_board.client import ItemResult, board_client
 from azure_board.config import (
     BoardSettings,
-    board_settings,
     load_board_settings,
 )
 from azure_board.interactive import WorkItem
@@ -52,21 +50,22 @@ class Add(AzureBoard):
         return client.create_item(self)
 
 
-def with_config(settings: BoardSettings):
-    board_settings = load_board_settings()
-    Add.model_fields["organization"].default = board_settings.organization
-    Add.model_fields["project"].default = board_settings.project
-    Add.model_fields["type"].annotation = board_settings.item_types
+def with_config(defaults: BoardSettings):
+    Add.model_fields["organization"].default = defaults.organization
+    Add.model_fields["project"].default = defaults.project
+    Add.model_fields["type"].annotation = defaults.item_types_annotation()
+    Add.model_fields["area_path"].default = defaults.area_path
+    Add.model_fields["area_path"].annotation = defaults.available_area_paths_annotation
+    Add.model_fields["assigned_to"].default = defaults.assigned_to
 
     return Add
 
 
 def run():
     setup_logging()
-    app = WorkItem(with_config(Add))
+    app = WorkItem(with_config(load_board_settings()))
     app.run()
 
 
 if __name__ == "__main__":
-    setup_logging()
     run()

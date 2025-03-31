@@ -1,6 +1,5 @@
 import logging
 import os
-from enum import Enum
 from pathlib import Path
 from typing import Literal
 
@@ -43,8 +42,10 @@ class BoardSettings(BaseSettings):
     available_area_paths: list[str] | None = None
     """Available area paths."""
 
-    assigned_to: str
-    """default person to assign the task to."""
+    assigned_to: str = "unknown"
+
+    def item_types_annotation(self):
+        return Literal[*self.item_types] if self.item_types else str  # type: ignore[union-attr]
 
     @property
     def default_area_path(self):
@@ -70,7 +71,3 @@ def load_board_settings() -> BoardSettings:
     except FileNotFoundError:
         _logger.warning("File not found")
         return BoardSettings()
-
-
-board_settings: BoardSettings = load_board_settings()
-_logger.info(board_settings)

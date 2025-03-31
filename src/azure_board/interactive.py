@@ -70,4 +70,4 @@ class WorkItem(App):
     @on(Button.Pressed, "#open_in_browser")
     @work
     async def open_in_browser(self) -> None:
-        webbrowser.open(self._last_result.item_url, 2)
+        webbrowser.open(self._last_result.item_url, 2)  # type:ignore
