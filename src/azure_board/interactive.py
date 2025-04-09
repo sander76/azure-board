@@ -3,6 +3,7 @@ from __future__ import annotations
 import webbrowser
 from typing import TYPE_CHECKING
 
+import pyperclip
 from textual import on, work
 from textual.app import App
 from textual.widgets import Button, Label
@@ -46,7 +47,10 @@ class WorkItem(App):
             self._last_model = result
             try:
                 self._last_result = self._last_model()
-                self.query_one("#result", Label).update(f"Work item created. id={self._last_result.id!r}")
+                pyperclip.copy(str(self._last_result.id))
+                self.query_one("#result", Label).update(
+                    f"Work item created. id={self._last_result.id!r} [copied to clipboard]"
+                )
             except Exception:
                 self.query_one("#result", Label).update("something went wrong. Please check the logs.")
 

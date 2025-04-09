@@ -5,7 +5,7 @@ requires = [ "hatchling" ]
 
 [project]
 name = "azure-board"
-version = "0.4.2"
+version = "0.4.3"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -21,6 +21,7 @@ dependencies = [
   "nox>=2025.2.9",
   "pydantic>=2.10.2",
   "pydantic-settings>=2.6.1",
+  "pyperclip>=1.9",
   "rich>=13.9.4",
   "textual>=0.88.1",
   "ticklist==0.5.1",
@@ -30,6 +31,10 @@ scripts.ab = "azure_board.cli:run"
 
 [tool.ruff]
 line-length = 110
+
+[[tool.mypy.overrides]]
+module = [ 'pyperclip.*' ]
+ignore_missing_imports = true
 
 [tool.uv]
 dev-dependencies = [
