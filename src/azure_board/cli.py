@@ -29,7 +29,7 @@ class Add(AzureBoard):
     description: str
     """Description of the work item."""
 
-    type: Literal["Bug", "Task"]
+    type: str
     """Type of the work-item. (like 'Bug' or 'Task')"""
 
     area_path: str
