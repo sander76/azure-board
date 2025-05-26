@@ -29,6 +29,11 @@ dependencies = [
 
 scripts.ab = "azure_board.cli:run"
 
+[dependency-groups]
+dev = [
+  "nox-uv>=0.2",
+]
+
 [tool.ruff]
 line-length = 110
 
