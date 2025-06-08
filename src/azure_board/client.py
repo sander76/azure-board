@@ -56,10 +56,17 @@ class BaseClient(ABC):
     def create_item(self, add: Add) -> ItemResult:
         """Create a work item."""
 
+    @abstractmethod
+    def change_status(self, item_id: int, organization: str, project: str) -> None:
+        """Change work item status to in_process."""
+
 
 class StubClient(BaseClient):
     def create_item(self, add: Add) -> ItemResult:
         return ItemResult(12345, "http://dummy_url")
+
+    def change_status(self, item_id: int, organization: str, project: str) -> None:
+        _logger.info(f"[DRY RUN] Changed status of item {item_id} to 'In Progress'")
 
 
 class BoardClient(BaseClient):
@@ -90,6 +97,20 @@ class BoardClient(BaseClient):
 
         return result.json()
 
+    def _patch(self, path: str, body: list[dict]):
+        url = httpx.URL(scheme="https", host=self._host, path=path)
+        data = json.dumps(body)
+        _logger.debug(data)
+        result = httpx.patch(url, json=body, headers=self.headers, params=self._query)
+
+        try:
+            result.raise_for_status()
+        except httpx.HTTPStatusError:
+            _logger.error(result)
+            raise
+
+        return result.json()
+
     def create_item(self, add: Add) -> ItemResult:
         _logger.info(f"create work item {add=!r}")
         path = f"/{add.organization}/{add.project}/_apis/wit/workitems/${add.type}"
@@ -105,9 +126,27 @@ class BoardClient(BaseClient):
             body.append(op_add("/fields/System.Description", value=add.description))
 
         _logger.debug(f"{body=!r}")
-        result = self._post(path, body)
+        result = self._patch(path, body)
         _logger.debug(f"{result=!r}")
 
         edit_url = result["_links"]["html"]["href"]
         id = result["id"]
         return ItemResult(id=id, item_url=edit_url)
+
+    def change_status(self, item_id: int, organization: str, project: str) -> None:
+        """Change the status of a work item to In Progress.
+        
+        Uses the Azure DevOps REST API PATCH endpoint to update the work item state.
+        See: https://learn.microsoft.com/en-us/rest/api/azure/devops/wit/work-items/update
+        """
+        _logger.info(f"Changing status of work item {item_id} to 'In Progress'")
+        
+        path = f"/{organization}/{project}/_apis/wit/workitems/{item_id}"
+        
+        body = [
+            op_add("/fields/System.State", "In Progress")
+        ]
+        
+        result = self._post(path, body)
+        if result:
+            _logger.debug(f"Status change result: {result}")
